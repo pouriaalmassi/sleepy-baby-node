@@ -4,7 +4,8 @@
   "description": "A sleep tracker API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --inspect src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon --inspect src/index.js"
   },
   "author": "",
   "license": "ISC",
