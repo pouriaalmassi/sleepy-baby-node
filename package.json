@@ -1,0 +1,23 @@
+{
+  "name": "sleepy-baby",
+  "version": "1.0.0",
+  "description": "A sleep tracker API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.3",
+    "jsonwebtoken": "9.0.0",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.3.16",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^3.0.1"
+  }
+}
