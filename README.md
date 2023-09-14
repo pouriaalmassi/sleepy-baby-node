@@ -1,0 +1,2 @@
+- no age. no avatar. no image processing.
+- no send email feature (sendgrid).
