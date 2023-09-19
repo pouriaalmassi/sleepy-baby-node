@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-// const Sleep = require("./sleep")
+const Sleep = require("./sleep")
 
 const schema = new mongoose.Schema(
   {
@@ -50,13 +50,11 @@ const schema = new mongoose.Schema(
   }
 )
 
-/*
 schema.virtual("sleeps", {
   ref: "Sleep",
   localField: "_id",
   foreignField: "owner",
 })
-*/
 
 schema.methods.toJSON = function () {
   const userObject = this.toObject()
