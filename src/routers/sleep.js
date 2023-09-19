@@ -13,7 +13,34 @@ router.post("/sleeps", auth, async (req, res) => {
     await value.save()
     res.status(201).send(value)
   } catch (e) {
-    res.status(400) // .send(e)
+    res.status(400)
+  }
+})
+
+router.get("/sleeps", auth, async (req, res) => {
+  const match = {}
+  const sort = {}
+
+  // TODO left off the `completed` matching
+
+  if (req.query.sortBy) {
+    const parts = req.query.sortBy.split(":")
+    sort[parts[0]] = parts[1] === "desc" ? -1 : 1
+  }
+
+  try {
+    await req.user.populate({
+      path: "sleeps",
+      match: match,
+      options: {
+        limit: parseInt(req.query.limit),
+        skip: parseInt(req.query.skip),
+        sort
+      }
+    }).execPopulate()
+  } catch (e) {
+    console.log(`Error: ${e}`)
+    res.status(500).send()
   }
 })
 
