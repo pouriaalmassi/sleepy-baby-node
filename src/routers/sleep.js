@@ -17,6 +17,32 @@ router.post("/sleeps", auth, async (req, res) => {
   }
 })
 
+router.patch("/sleeps/:id", auth, async (req, res) => {
+  const requestKeys = Object.keys(req.body)
+  const allowedKeys = ["endDate"]
+  const isValid = requestKeys.every((k) => allowedKeys.includes(k))
+
+  if (!isValid) {
+    return res.status(400).send({ error: "Invalid update!" })
+  }
+
+  try {
+    const sleep = await Sleep.findOne({ _id: req.params.id, owner: req.user._id })
+
+    if (!sleep) {
+      return res.status(404).send()
+    }
+
+    requestKeys.forEach((update) => (sleep[update] = req.body[update]))
+
+    await sleep.save()
+
+    res.send(sleep)
+  } catch (e) {
+    res.status(400).send(e)
+  }
+})
+
 router.get("/sleeps", auth, async (req, res) => {
   const match = {}
   const sort = {}
@@ -37,7 +63,7 @@ router.get("/sleeps", auth, async (req, res) => {
       },
     }).execPopulate()
 
-    res.send({ "response": req.user.sleeps })
+    res.send({ "sleeps": req.user.sleeps })
   } catch (e) {
     console.log(`Error: ${e}`)
     res.status(500).send()

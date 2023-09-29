@@ -26,7 +26,7 @@ router.post("/users/login", async (req, res) => {
 
 router.post("/users/logout", auth, async (req, res) => {
   try {
-    req.users.tokens = req.user.tokens.filter((t) => {
+    req.user.tokens = req.user.tokens.filter((t) => {
       return t.token !== req.token
     })
     await req.user.save()
@@ -48,6 +48,41 @@ router.post("/users/logoutAll", auth, async (req, res) => {
 
 router.get("/users/me", auth, async (req, res) => {
   res.send(req.user)
+})
+
+router.patch("/users/me", auth, async (req, res) => {
+  const requestKeys = Object.keys(req.body)
+  const allowedKeys = ["name", "password"]
+  const isValid = requestKeys.every((u) => allowedKeys.includes(u))
+
+  if (!isValid) {
+    return res.status(400).send({ error: "Invalid updates!" })
+  }
+
+  try {
+    const user = req.user
+
+    requestKeys.forEach((update) => {
+      // []s accesses a property dynamically.
+      user[update] = req.body[update]
+    })
+
+    await user.save()
+
+    res.send(user)
+  } catch (e) {
+    res.status(400).send(e)
+  }
+})
+
+router.delete("/users/me", auth, async (req, res) => {
+  try {
+    await req.user.remove()
+    // sendCloseEmail(req.user.email, req.user.name)
+    res.send(req.user)
+  } catch (e) {
+    res.status(500).send()
+  }
 })
 
 module.exports = router

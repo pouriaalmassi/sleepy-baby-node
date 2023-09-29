@@ -2,9 +2,11 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema(
   {
-    isStart: {
-      type: Boolean,
-      default: false,
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +16,7 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 const Sleep = mongoose.model("Sleep", schema)

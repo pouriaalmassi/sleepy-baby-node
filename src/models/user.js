@@ -31,7 +31,7 @@ const schema = new mongoose.Schema(
       validate(v) {
         if (v.toLowerCase().includes("password")) {
           throw new Error(
-            "The password should not contain the word 'passwords'."
+            "The password should not contain the word 'passwords'.",
           )
         }
       },
@@ -47,7 +47,7 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 schema.virtual("sleeps", {
@@ -56,7 +56,7 @@ schema.virtual("sleeps", {
   foreignField: "owner",
 })
 
-schema.methods.toJSON = function () {
+schema.methods.toJSON = function() {
   const userObject = this.toObject()
 
   delete userObject.password
@@ -65,10 +65,10 @@ schema.methods.toJSON = function () {
   return userObject
 }
 
-schema.methods.generateAuthToken = async function () {
+schema.methods.generateAuthToken = async function() {
   const newToken = jwt.sign(
     { _id: this._id.toString() },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
   )
 
   this.tokens = this.tokens.concat({ token: newToken })
@@ -96,7 +96,7 @@ schema.statics.findByCredentials = async (email, password) => {
   return user
 }
 
-schema.pre("save", async function (next) {
+schema.pre("save", async function(next) {
   console.log("Pre hook 'save' middleware running.")
 
   if (this.isModified("password")) {
@@ -106,10 +106,10 @@ schema.pre("save", async function (next) {
   next()
 })
 
-schema.pre("remove", async function (next) {
+schema.pre("remove", async function(next) {
   console.log("Pre hook 'remove' middleware running.")
 
-  await Task.deleteMany({ owner: this._id })
+  await Sleep.deleteMany({ owner: this._id })
 
   next()
 })
