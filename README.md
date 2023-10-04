@@ -1,2 +1,8 @@
-- no age. no avatar. no image processing.
-- no send email feature (sendgrid).
+# Sleepy Baby
+
+A sleep tracker.
+
+## Start mongodb:
+
+/Users/pouriaalmassi/mongodb/bin/mongod --dbpath=/Users/pouriaalmassi/mongodb-data
+
