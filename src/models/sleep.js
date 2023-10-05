@@ -1,7 +1,12 @@
 const mongoose = require("mongoose")
+const { randomUUID } = require("crypto")
 
 const schema = new mongoose.Schema(
   {
+    id: {
+      type: mongoose.Schema.Types.String,
+      default: () => randomUUID()
+    },
     startDate: {
       type: Date,
     },
