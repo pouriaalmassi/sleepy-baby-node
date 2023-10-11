@@ -19,7 +19,7 @@ router.post("/sleeps", auth, async (req, res) => {
 
 router.patch("/sleeps/:id", auth, async (req, res) => {
   const requestKeys = Object.keys(req.body)
-  const allowedKeys = ["endDate"]
+  const allowedKeys = ["startDate", "endDate"]
   const isValid = requestKeys.every((k) => allowedKeys.includes(k))
 
   if (!isValid) {
