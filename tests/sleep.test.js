@@ -39,3 +39,13 @@ test("Users should not be able to delete the sleeps of other users.", async () =
   const sleep = await Sleep.findById(sleepOne)
   expect(sleep).not.toBeNull()
 })
+
+test("Users should be able to delete their own sleeps.", async () => {
+  const res = await request(app)
+    .delete(`/sleeps/${sleepOne._id}`)
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200)
+  const sleep = await Sleep.findById(sleepOne)
+  expect(sleep).toBeNull()
+})

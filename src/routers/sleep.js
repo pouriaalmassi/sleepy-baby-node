@@ -70,4 +70,18 @@ router.get("/sleeps", auth, async (req, res) => {
   }
 })
 
+router.delete("/sleeps/:id", auth, async (req, res) => {
+  try {
+    const sleep = await Sleep.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
+
+    if (!sleep) {
+      return res.status(404).send()
+    }
+
+    res.send()
+  } catch (e) {
+    res.status(400).send(e)
+  }
+})
+
 module.exports = router
